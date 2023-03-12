@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
-import classes from "./Counter.module.css";
-import {Input} from "../input/Input";
-import {Button} from "../button/Button";
-import {useDispatch} from "react-redux";
-import {changeCounterMinMaxValueAC, ErrorType} from "../../store/counter-reducer";
+import classes from './CounterSetter.module.css';
+import {Input} from '../../input/Input';
+import {Button} from '../../button/Button';
+import {useDispatch} from 'react-redux';
+import {changeCounterMinMaxValueAC, ErrorType} from '../../../store/counter-reducer';
 
 type PropsType = {
     minValue: number
@@ -45,8 +45,9 @@ export const CounterSetter: React.FC<PropsType> = (
         ? inputMaxValue <= inputMinValue || inputMaxValue < 0 : false
     const disabledButtonSet = errorHandlerMin || errorHandlerMax
 
+
     return (
-        <div className={classes.counterItem}>
+        <div className={classes.container}>
             <div>
                 <Input value={inputMinValue} onChange={onChangeMinValue} title={'Min'} error={errorHandlerMin}/>
                 <Input value={inputMaxValue} onChange={onChangeMaxValue} title={'Max'} error={errorHandlerMax}/>
@@ -56,4 +57,5 @@ export const CounterSetter: React.FC<PropsType> = (
             </div>
         </div>
     );
+
 };

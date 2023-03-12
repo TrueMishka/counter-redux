@@ -1,24 +1,15 @@
-.counterItem {
+.counterContainer {
+    height: 100vh;
+    width: 100vw;
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    width: 300px;
-    height: 200px;
-    border: 1px solid gray;
-    border-radius: 20px;
-    padding: 20px;
-    margin: 20px;
+    background-size: cover;
+    background-position: center;
 }
-.counterValue {
-    align-items: center;
-    width: 100px;
-    height: 50px;
-    border-radius: 8px;
-    padding: 20px;
-}
-.counterValueText {
-    font-size: 30px;
-}
-.errorMax {
-    background-color: darkgray;
+
+@media (max-width: 770px) {
+    .counterContainer {
+        flex-direction: column;
+    }
 }

@@ -1,55 +1,19 @@
-import {loadLocalStorage, LocalStorageStateType} from "./localStorage";
+import {saveLocalStorage} from "./localStorage";
+import {Dispatch} from "redux";
 
 const INCREASE_COUNTER = 'INCREASE-COUNTER'
 const RESET_COUNTER = 'RESET-COUNTER'
 const SET_COUNTER_MIN_MAX_VALUE = 'SET-COUNTER-MIN-MAX-VALUE'
 const CHANGE_COUNTER_MIN_MAX_VALUE = 'CHANGE-COUNTER-MIN-MAX-VALUE'
 
-export type IncreaseCounterAT = ReturnType<typeof increaseCounterAC>
-export type ResetCounterAT = ReturnType<typeof resetCounterAC>
-export type SetCounterMinMaxValueAT = ReturnType<typeof setCounterMinMaxValueAC>
-export type ChangeCounterMinMaxValueAT = ReturnType<typeof changeCounterMinMaxValueAC>
-
-export type ActionType = IncreaseCounterAT
-    | ResetCounterAT
-    | SetCounterMinMaxValueAT
-    | ChangeCounterMinMaxValueAT
-
-export type ErrorType = {
-    unSave: boolean
-    inputError: boolean
+const initialState: CounterStateType = {
+    min: 0,
+    max: 5,
+    value: 0,
+    error: {unSave: false, inputError: false}
 }
 
-export type CounterStateType = {
-    value: number
-    min: number,
-    max: number,
-    error: ErrorType
-    localStorage: LocalStorageStateType
-}
-
-const initialState = () => {
-    const localStorage = loadLocalStorage()
-    if (localStorage) {
-        return {
-            value: localStorage.minLocalStorage,
-            min: localStorage.minLocalStorage,
-            max: localStorage.maxLocalStorage,
-            error: {unSave: false, inputError: false},
-            localStorage: localStorage
-        }
-    } else {
-        return {
-            value: 0,
-            min: 0,
-            max: 5,
-            error: {unSave: false, inputError: false},
-            localStorage: loadLocalStorage()
-        }
-    }
-}
-
-export const counterReducer = (state: CounterStateType = initialState(), action: ActionType): CounterStateType => {
+export const counterReducer = (state: CounterStateType = initialState, action: ActionType): CounterStateType => {
     switch (action.type) {
         case INCREASE_COUNTER:
             if (state.value === state.max) {
@@ -85,6 +49,7 @@ export const counterReducer = (state: CounterStateType = initialState(), action:
     }
 }
 
+// Actions
 export const increaseCounterAC = () => {
     return {type: INCREASE_COUNTER} as const
 }
@@ -96,4 +61,33 @@ export const setCounterMinMaxValueAC = (min: number, max: number) => {
 }
 export const changeCounterMinMaxValueAC = (minValue: number, maxValue: number) => {
     return {type: CHANGE_COUNTER_MIN_MAX_VALUE, minValue, maxValue} as const
+}
+
+// Thunk
+export const setCounterValueTC = (min: number, max: number) => (dispatch: Dispatch) => {
+    dispatch(setCounterMinMaxValueAC(min, max))
+    saveLocalStorage(min, max)
+}
+
+// types
+export type IncreaseCounterAT = ReturnType<typeof increaseCounterAC>
+export type ResetCounterAT = ReturnType<typeof resetCounterAC>
+export type SetCounterMinMaxValueAT = ReturnType<typeof setCounterMinMaxValueAC>
+export type ChangeCounterMinMaxValueAT = ReturnType<typeof changeCounterMinMaxValueAC>
+
+export type ActionType = IncreaseCounterAT
+    | ResetCounterAT
+    | SetCounterMinMaxValueAT
+    | ChangeCounterMinMaxValueAT
+
+export type ErrorType = {
+    unSave: boolean
+    inputError: boolean
+}
+
+export type CounterStateType = {
+    value: number
+    min: number,
+    max: number,
+    error: ErrorType
 }

@@ -1,8 +1,8 @@
 import React from 'react';
-import {Button} from "../button/Button";
-import {CounterFormTitle} from "./CounterTitle";
-import classes from "./Counter.module.css";
-import {ErrorType} from "../../store/counter-reducer";
+import {Button} from '../../button/Button';
+import {CounterFormTitle} from '../Title/CounterTitle';
+import classes from './CounterForm.module.css';
+import {ErrorType} from '../../../store/counter-reducer';
 
 type PropsType = {
     minValue: number
@@ -25,7 +25,7 @@ export const CounterForm: React.FC<PropsType> = ({counterValue, minValue, maxVal
             : counterValue
 
     return (
-        <div className={classes.counterItem}>
+        <div className={classes.container}>
             <h3>Counter</h3>
                 <CounterFormTitle value={counterTitle}/>
             <div>

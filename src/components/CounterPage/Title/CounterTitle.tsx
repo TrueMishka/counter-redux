@@ -1,5 +1,5 @@
 import React from 'react';
-import classes from "./Counter.module.css";
+import classes from './CounterTitle.module.css';
 
 type PropsType = {
     value: number | string
@@ -7,6 +7,6 @@ type PropsType = {
 
 export const CounterFormTitle:React.FC<PropsType> = ({value}) => {
     return (
-        <span className={classes.counterValueText}>{value}</span>
+        <span className={classes.text}>{value}</span>
     );
 };
